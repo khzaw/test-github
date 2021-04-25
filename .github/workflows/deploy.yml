@@ -7,3 +7,20 @@ jobs:
     steps:
     - name: Test
       run: echo "test"
+    - name: Send stats
+      uses: fjogeleit/http-request-action@master
+      with:
+        url: 'https://end0qr3fuyyt7nr.m.pipedream.net'
+        bearerToken: 'Bearer XXX'
+        escapeData: 'true'
+        data: >-
+          {
+            "entity": "Pandora",
+            "tribe": "New Business",
+            "timestamp": "2016-06-10T21:42:24Z",
+            "product": "Content Agent Experience Backend",
+            "application": "Content Agent Experience Backend",
+            "environment": "staging",
+            "tag": "latest",
+            "release_notes": "test release notes"
+          }
