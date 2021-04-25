@@ -1,0 +1,9 @@
+name: "Deploy"
+on: ["deployment"]
+
+jobs:
+  deployment:
+    runs-on: "ubuntu-latest"
+    steps:
+    - name: Test
+      run: echo "test"
