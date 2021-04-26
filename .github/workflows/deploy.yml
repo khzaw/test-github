@@ -7,6 +7,9 @@ jobs:
     steps:
     - name: Test
       run: echo "test"
+    - name: Get current timestamp
+      id: timestamp
+      run: echo "::set-output name=timestamp::$(date +'%FT%TZ')"
     - name: Send stats
       uses: fjogeleit/http-request-action@master
       with:
@@ -17,7 +20,7 @@ jobs:
           {
             "entity": "Pandora",
             "tribe": "New Business",
-            "timestamp": "2016-06-10T21:42:24Z",
+            "timestamp": "${{ steps.timestamp.outputs.timestamp }}",
             "product": "Content Agent Experience Backend",
             "application": "Content Agent Experience Backend",
             "environment": "staging",
