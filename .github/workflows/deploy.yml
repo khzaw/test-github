@@ -36,3 +36,4 @@ jobs:
         with:
           deploy-env: ${{ steps.get-deployment-name.outputs.deploy_env }}
           release-notes: ${{ steps.commits.outputs.commits }}
+          token: ${{ secrets.TEST }}
