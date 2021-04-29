@@ -26,3 +26,4 @@ runs:
         "timestamp": "'"$(date +'%FT%TZ')"'",
         "release_notes": "${{ inputs.release-notes }}"
         }'
+      shell: bash
