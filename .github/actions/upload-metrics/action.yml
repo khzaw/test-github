@@ -1,0 +1,28 @@
+name: Upload deployment metrics to Data Fridge
+inputs:
+  deploy-env:
+    description: Deployment environment
+    required: true
+    default: "development"
+  release-notes:
+    description: Release notes
+    required: true
+    default: "latest"
+runs:
+  using: "composite"
+  steps:
+    - name: Send stats
+      run: >-
+        curl -X "POST" "https://end0qr3fuyyt7nr.m.pipedream.net"
+        -H 'Authorization: Bearer weeeheee'
+        -H 'Content-Type: application/json'
+        -d $'{
+        "entity": "Pandora",
+        "product": "Content Agent Experience Backend",
+        "tribe": "Vendor Enablement",
+        "environment": "${{ inputs.deploy-env }}",
+        "tag": "latest",
+        "application": "Content Agent Experience Backend",
+        "timestamp": "'"$(date +'%FT%TZ')"'",
+        "release_notes": "${{ inputs.release-notes }}"
+        }'

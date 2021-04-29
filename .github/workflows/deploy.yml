@@ -5,25 +5,34 @@ jobs:
   deployment:
     runs-on: "ubuntu-latest"
     steps:
-    - name: Test
-      run: echo "test"
-    - name: Get current timestamp
-      id: timestamp
-      run: echo "::set-output name=timestamp::$(date +'%FT%TZ')"
-    - name: Send stats
-      uses: fjogeleit/http-request-action@master
-      with:
-        url: 'https://end0qr3fuyyt7nr.m.pipedream.net'
-        bearerToken: 'Bearer XXX'
-        escapeData: 'true'
-        data: >-
-          {
-            "entity": "Pandora",
-            "tribe": "New Business",
-            "timestamp": "${{ steps.timestamp.outputs.timestamp }}",
-            "product": "Content Agent Experience Backend",
-            "application": "Content Agent Experience Backend",
-            "environment": "staging",
-            "tag": "latest",
-            "release_notes": "test release notes"
-          }
+      - name: Test
+        run: echo "test"
+
+      - uses: actions/checkout@master
+      # DataFridge only accepts the long name
+      - name: Set deploy environment name
+        id: get-deployment-name
+        env:
+          DEPLOY_STG: stg
+        run: |
+          case $DEPLOY_STG in
+           prod)
+             echo "::set-output name=deploy_env::production"
+             ;;
+           stg)
+             echo "::set-output name=deploy_env::staging"
+             ;;
+           dev)
+             echo "::set-output name=deploy_env::development"
+             ;;
+           esac
+
+      - name: Get commits range
+        id: commits
+        run: echo "::set-output name=commits::$(git log --abbrev-commit --pretty=oneline ${{ GITHUB_SHA }}"
+
+      - name: Upload metrics
+        uses: ./.github/actions/upload-metrics
+        with:
+          deploy-env: ${{ steps.get-deployment-name.outputs.deploy_env }}
+          release-notes: ${{ steps.commits.outputs.commits }}
