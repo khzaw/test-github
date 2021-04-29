@@ -12,9 +12,11 @@ runs:
   using: "composite"
   steps:
     - name: Send stats
+      env:
+        AUTH_KEY: ${{ secrets.TEST }}
       run: >-
         curl -X "POST" "https://end0qr3fuyyt7nr.m.pipedream.net"
-        -H "Authorization: Bearer '"${{ secrets.TEST }}"'"
+        -H "Authorization: Bearer ${{ secrets.TEST }}"
         -H 'Content-Type: application/json'
         -d $'{
         "entity": "Pandora",
