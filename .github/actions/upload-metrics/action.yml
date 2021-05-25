@@ -17,7 +17,7 @@ runs:
   steps:
     - name: Send stats
       run: >-
-        curl -X "POST" "https://end0qr3fuyyt7nr.m.pipedream.net"
+        curl -i --retry 10 --retry-delay 32 -X "POST" "https://end0qr3fuyyt7nr.m.pipedream.net"
         -H "Authorization: Bearer ${{ inputs.token }}"
         -H 'Content-Type: application/json'
         -d $'{
