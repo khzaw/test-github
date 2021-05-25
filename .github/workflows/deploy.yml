@@ -29,7 +29,7 @@ jobs:
 
       - name: Get commits range
         id: commits
-        run: echo "::set-output name=commits::$(git log --abbrev-commit --pretty=oneline ${{ github.sha }})"
+        run: echo "::set-output name=commits::$(git log -n 1 --abbrev-commit --pretty=oneline ${{ github.sha }})"
 
       - name: Upload metrics
         uses: ./.github/actions/upload-metrics

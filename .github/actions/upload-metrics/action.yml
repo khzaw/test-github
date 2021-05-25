@@ -27,7 +27,7 @@ runs:
         "environment": "${{ inputs.deploy-env }}",
         "tag": "latest",
         "application": "Content Agent Experience Backend",
-        "timestamp": "'"$(date +'%FT%TZ')"'",
+        "timestamp": "'"$(date -u +'%FT%TZ')"'",
         "release_notes": "${{ inputs.release-notes }}"
         }'
       shell: bash
